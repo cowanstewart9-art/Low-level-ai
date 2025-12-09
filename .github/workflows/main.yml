@@ -1,4 +1,4 @@
-name: AI Assistant CI
+name: AI Assistant CI & Release
 
 on:
   push:
@@ -7,11 +7,12 @@ on:
     branches: [ main ]
 
 jobs:
-  test:
+  build_and_test:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Check out repository code
+      uses: actions/checkout@v3
 
     - name: Set up Python 3.9
       uses: actions/setup-python@v3
@@ -21,3 +22,12 @@ jobs:
     - name: Run Assistant Test
       run: |
         echo -e "help\nexit" | python3 assistant.py
+
+    - name: Package Assistant for Release
+      run: zip -r palmon-assistant.zip assistant.py data
+
+    - name: Upload Assistant Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: palmon-assistant-release
+        path: palmon-assistant.zip
