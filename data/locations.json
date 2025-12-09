@@ -1,0 +1,49 @@
+[
+  {
+    "name": "Whispering Forest",
+    "palmons": [
+      "Firesaur",
+      "Elecphant"
+    ],
+    "resources": [
+      "Wood",
+      "Herb",
+      "Fiber"
+    ],
+    "description": "A dense forest with a variety of common Palmons and basic resources."
+  },
+  {
+    "name": "Sunny Plains",
+    "palmons": [
+      "Elecphant"
+    ],
+    "resources": [
+      "Fiber",
+      "Stone"
+    ],
+    "description": "An open field where Electric-type Palmons are often found."
+  },
+  {
+    "name": "Crystal Caves",
+    "palmons": [
+      "Aquaturtle"
+    ],
+    "resources": [
+      "Stone",
+      "Crystal"
+    ],
+    "description": "A dark cave system with a network of underground rivers."
+  },
+  {
+    "name": "Volcano's Heart",
+    "description": "A dangerous area full of fire-type Palmons.",
+    "palmons": [
+      "Firesaur",
+      "Lavamander"
+    ],
+    "resources": [
+      "Iron",
+      "Coal"
+    ]
+  }
+]

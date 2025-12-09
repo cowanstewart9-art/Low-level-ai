@@ -1,0 +1,40 @@
+[
+  {
+    "item": "Basic Potion",
+    "ingredients": [
+      {
+        "name": "Herb",
+        "quantity": 3
+      },
+      {
+        "name": "Water Bottle",
+        "quantity": 1
+      }
+    ],
+    "description": "A simple potion that restores a small amount of health."
+  },
+  {
+    "item": "Palmon Trap",
+    "ingredients": [
+      {
+        "name": "Wood",
+        "quantity": 5
+      },
+      {
+        "name": "Fiber",
+        "quantity": 2
+      }
+    ],
+    "description": "A basic trap used to capture wild Palmons."
+  },
+  {
+    "item": "Wooden Sword",
+    "ingredients": [
+      {
+        "name": "Wood",
+        "quantity": 10
+      }
+    ],
+    "description": "A simple wooden sword for basic combat."
+  }
+]
