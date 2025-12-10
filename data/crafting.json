@@ -36,19 +36,5 @@
       }
     ],
     "description": "A simple wooden sword for basic combat."
-  },
-  {
-    "item": "Super Potion",
-    "description": "A potion that restores a moderate amount of health.",
-    "ingredients": [
-      {
-        "name": "Super Herb",
-        "quantity": 2
-      },
-      {
-        "name": "Water Bottle",
-        "quantity": 1
-      }
-    ]
   }
 ]

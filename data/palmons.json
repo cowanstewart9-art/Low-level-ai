@@ -48,37 +48,5 @@
       "Grass"
     ],
     "rarity": "Common"
-  },
-  {
-    "name": "Rockodile",
-    "type": "Rock",
-    "abilities": [
-      "Rock Throw",
-      "Harden"
-    ],
-    "strengths": [
-      "Water",
-      "Grass"
-    ],
-    "weaknesses": [
-      "Fire",
-      "Flying"
-    ],
-    "rarity": "Uncommon"
-  },
-  {
-    "name": "Testodon",
-    "type": "Test",
-    "abilities": [
-      "Test1",
-      "Test2"
-    ],
-    "strengths": [
-      "Test3"
-    ],
-    "weaknesses": [
-      "Test4"
-    ],
-    "rarity": "Common"
   }
 ]
