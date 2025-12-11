@@ -48,5 +48,20 @@
       "Grass"
     ],
     "rarity": "Common"
+  },
+  {
+    "name": "TestPalmon",
+    "type": "Electric",
+    "abilities": [
+      "Shock",
+      "Zap"
+    ],
+    "strengths": [
+      "Water"
+    ],
+    "weaknesses": [
+      "Ground"
+    ],
+    "rarity": "Rare"
   }
 ]

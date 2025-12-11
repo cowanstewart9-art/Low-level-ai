@@ -1,4 +1,5 @@
 from palmon_assistant.core import PalmonAssistant
+import os
 
 
 def show_help():
@@ -81,7 +82,10 @@ def handle_add_location(assistant):
 
 def main():
     """Main function to run the Palmon Survival AI assistant."""
-    assistant = PalmonAssistant()
+    # Get the directory of the current script
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    data_path = os.path.join(base_dir, '..', 'data')
+    assistant = PalmonAssistant(data_path=data_path)
 
     print("Welcome to the Palmon Survival AI Assistant!")
     print("Type 'help' to see a list of available commands.")

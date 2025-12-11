@@ -3,8 +3,14 @@ import os
 
 
 class PalmonAssistant:
-    def __init__(self, data_path='data'):
-        self.data_path = data_path
+    def __init__(self, data_path=None):
+        if data_path is None:
+            # Get the directory of the current script
+            base_dir = os.path.dirname(os.path.abspath(__file__))
+            self.data_path = os.path.join(base_dir, '..', 'data')
+        else:
+            self.data_path = data_path
+
         self.palmons = self.load_data('palmons.json')
         self.crafting = self.load_data('crafting.json')
         self.locations = self.load_data('locations.json')

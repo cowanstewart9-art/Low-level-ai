@@ -33,5 +33,15 @@
       "Crystal"
     ],
     "description": "A dark cave system with a network of underground rivers."
+  },
+  {
+    "name": "Test Forest",
+    "description": "A test forest",
+    "palmons": [
+      "TestPalmon"
+    ],
+    "resources": [
+      "Wood"
+    ]
   }
 ]

@@ -36,5 +36,15 @@
       }
     ],
     "description": "A simple wooden sword for basic combat."
+  },
+  {
+    "item": "Test Potion",
+    "description": "A test potion",
+    "ingredients": [
+      {
+        "name": "Herb",
+        "quantity": 1
+      }
+    ]
   }
 ]
