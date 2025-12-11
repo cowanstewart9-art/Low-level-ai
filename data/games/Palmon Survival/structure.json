@@ -1,0 +1,19 @@
+{
+  "categories": {
+    "palmon": {
+      "file": "palmons.json",
+      "key_field": "name",
+      "fields": ["type", "abilities", "strengths", "weaknesses", "rarity"]
+    },
+    "recipe": {
+      "file": "crafting.json",
+      "key_field": "item",
+      "fields": ["description", "ingredients"]
+    },
+    "location": {
+      "file": "locations.json",
+      "key_field": "name",
+      "fields": ["description", "palmons", "resources"]
+    }
+  }
+}
