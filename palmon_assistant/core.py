@@ -11,26 +11,27 @@ class PalmonAssistant:
         else:
             self.data_path = data_path
 
-        self.palmons = self.load_data('palmons.json')
-        self.crafting = self.load_data('crafting.json')
-        self.locations = self.load_data('locations.json')
+        self.world_data = self.load_world_data()
+        self.palmons = self.world_data.get('palmons', [])
+        self.crafting = self.world_data.get('crafting', [])
+        self.locations = self.world_data.get('locations', [])
 
-    def load_data(self, filename):
-        """Loads data from a JSON file."""
-        filepath = os.path.join(self.data_path, filename)
+    def load_world_data(self):
+        """Loads all data from the palmon_world.json file."""
+        filepath = os.path.join(self.data_path, 'palmon_world.json')
         if not os.path.exists(filepath):
-            return []
+            return {}
         try:
             with open(filepath, 'r') as f:
                 return json.load(f)
         except json.JSONDecodeError:
-            return []
+            return {}
 
-    def save_data(self, filename, data):
-        """Saves data to a JSON file."""
-        filepath = os.path.join(self.data_path, filename)
+    def save_world_data(self):
+        """Saves all data to the palmon_world.json file."""
+        filepath = os.path.join(self.data_path, 'palmon_world.json')
         with open(filepath, 'w') as f:
-            json.dump(data, f, indent=2)
+            json.dump(self.world_data, f, indent=2)
 
     def find_palmon(self, name):
         """Finds a Palmon by name and returns its information."""
@@ -62,7 +63,7 @@ class PalmonAssistant:
         if any(p['name'].lower() == name for p in self.palmons):
             return "A Palmon with this name already exists."
         self.palmons.append(palmon_data)
-        self.save_data('palmons.json', self.palmons)
+        self.save_world_data()
         return f"Successfully added '{palmon_data['name']}' to the knowledge base."
 
     def add_recipe(self, recipe_data):
@@ -71,7 +72,7 @@ class PalmonAssistant:
         if any(r['item'].lower() == item for r in self.crafting):
             return "A recipe for this item already exists."
         self.crafting.append(recipe_data)
-        self.save_data('crafting.json', self.crafting)
+        self.save_world_data()
         return f"Successfully added recipe for '{recipe_data['item']}' to the knowledge base."
 
     def add_location(self, location_data):
@@ -80,5 +81,5 @@ class PalmonAssistant:
         if any(loc['name'].lower() == name for loc in self.locations):
             return "A location with this name already exists."
         self.locations.append(location_data)
-        self.save_data('locations.json', self.locations)
+        self.save_world_data()
         return f"Successfully added '{location_data['name']}' to the knowledge base."

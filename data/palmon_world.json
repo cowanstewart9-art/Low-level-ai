@@ -1,0 +1,166 @@
+{
+  "palmons": [
+    {
+      "name": "Elecphant",
+      "type": "Electric",
+      "abilities": [
+        "Thunder Shock",
+        "Static Charge"
+      ],
+      "strengths": [
+        "Water",
+        "Flying"
+      ],
+      "weaknesses": [
+        "Ground"
+      ],
+      "rarity": "Common"
+    },
+    {
+      "name": "Firesaur",
+      "type": "Fire",
+      "abilities": [
+        "Ember",
+        "Flame Burst"
+      ],
+      "strengths": [
+        "Grass",
+        "Ice"
+      ],
+      "weaknesses": [
+        "Water",
+        "Rock"
+      ],
+      "rarity": "Common"
+    },
+    {
+      "name": "Aquaturtle",
+      "type": "Water",
+      "abilities": [
+        "Water Gun",
+        "Bubble Beam"
+      ],
+      "strengths": [
+        "Fire",
+        "Ground"
+      ],
+      "weaknesses": [
+        "Electric",
+        "Grass"
+      ],
+      "rarity": "Common"
+    },
+    {
+      "name": "TestPalmon",
+      "type": "Electric",
+      "abilities": [
+        "Shock",
+        "Zap"
+      ],
+      "strengths": [
+        "Water"
+      ],
+      "weaknesses": [
+        "Ground"
+      ],
+      "rarity": "Rare"
+    }
+  ],
+  "crafting": [
+    {
+      "item": "Basic Potion",
+      "ingredients": [
+        {
+          "name": "Herb",
+          "quantity": 3
+        },
+        {
+          "name": "Water Bottle",
+          "quantity": 1
+        }
+      ],
+      "description": "A simple potion that restores a small amount of health."
+    },
+    {
+      "item": "Palmon Trap",
+      "ingredients": [
+        {
+          "name": "Wood",
+          "quantity": 5
+        },
+        {
+          "name": "Fiber",
+          "quantity": 2
+        }
+      ],
+      "description": "A basic trap used to capture wild Palmons."
+    },
+    {
+      "item": "Wooden Sword",
+      "ingredients": [
+        {
+          "name": "Wood",
+          "quantity": 10
+        }
+      ],
+      "description": "A simple wooden sword for basic combat."
+    },
+    {
+      "item": "Test Potion",
+      "description": "A test potion",
+      "ingredients": [
+        {
+          "name": "Herb",
+          "quantity": 1
+        }
+      ]
+    }
+  ],
+  "locations": [
+    {
+      "name": "Whispering Forest",
+      "palmons": [
+        "Firesaur",
+        "Elecphant"
+      ],
+      "resources": [
+        "Wood",
+        "Herb",
+        "Fiber"
+      ],
+      "description": "A dense forest with a variety of common Palmons and basic resources."
+    },
+    {
+      "name": "Sunny Plains",
+      "palmons": [
+        "Elecphant"
+      ],
+      "resources": [
+        "Fiber",
+        "Stone"
+      ],
+      "description": "An open field where Electric-type Palmons are often found."
+    },
+    {
+      "name": "Crystal Caves",
+      "palmons": [
+        "Aquaturtle"
+      ],
+      "resources": [
+        "Stone",
+        "Crystal"
+      ],
+      "description": "A dark cave system with a network of underground rivers."
+    },
+    {
+      "name": "Test Forest",
+      "description": "A test forest",
+      "palmons": [
+        "TestPalmon"
+      ],
+      "resources": [
+        "Wood"
+      ]
+    }
+  ]
+}
