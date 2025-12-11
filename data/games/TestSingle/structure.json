@@ -1,0 +1,12 @@
+{
+  "storage_mode": "single_file",
+  "data_file": "TestSingle.json",
+  "categories": {
+    "unit": {
+      "key_field": "name",
+      "fields": [
+        "hp"
+      ]
+    }
+  }
+}

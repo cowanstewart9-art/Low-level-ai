@@ -1,0 +1,189 @@
+{
+  "palmon": [
+    {
+      "name": "Elecphant",
+      "type": "Electric",
+      "abilities": [
+        "Thunder Shock",
+        "Static Charge"
+      ],
+      "strengths": [
+        "Water",
+        "Flying"
+      ],
+      "weaknesses": [
+        "Ground"
+      ],
+      "rarity": "Common"
+    },
+    {
+      "name": "Firesaur",
+      "type": "Fire",
+      "abilities": [
+        "Ember",
+        "Flame Burst"
+      ],
+      "strengths": [
+        "Grass",
+        "Ice"
+      ],
+      "weaknesses": [
+        "Water",
+        "Rock"
+      ],
+      "rarity": "Common"
+    },
+    {
+      "name": "Aquaturtle",
+      "type": "Water",
+      "abilities": [
+        "Water Gun",
+        "Bubble Beam"
+      ],
+      "strengths": [
+        "Fire",
+        "Ground"
+      ],
+      "weaknesses": [
+        "Electric",
+        "Grass"
+      ],
+      "rarity": "Common"
+    },
+    {
+      "name": "Rockodile",
+      "type": "Rock",
+      "abilities": [
+        "Rock Throw",
+        "Harden"
+      ],
+      "strengths": [
+        "Water",
+        "Grass"
+      ],
+      "weaknesses": [
+        "Fire",
+        "Flying"
+      ],
+      "rarity": "Uncommon"
+    },
+    {
+      "name": "Testodon",
+      "type": "Test",
+      "abilities": [
+        "Test1",
+        "Test2"
+      ],
+      "strengths": [
+        "Test3"
+      ],
+      "weaknesses": [
+        "Test4"
+      ],
+      "rarity": "Common"
+    }
+  ],
+  "recipe": [
+    {
+      "item": "Basic Potion",
+      "ingredients": [
+        {
+          "name": "Herb",
+          "quantity": 3
+        },
+        {
+          "name": "Water Bottle",
+          "quantity": 1
+        }
+      ],
+      "description": "A simple potion that restores a small amount of health."
+    },
+    {
+      "item": "Palmon Trap",
+      "ingredients": [
+        {
+          "name": "Wood",
+          "quantity": 5
+        },
+        {
+          "name": "Fiber",
+          "quantity": 2
+        }
+      ],
+      "description": "A basic trap used to capture wild Palmons."
+    },
+    {
+      "item": "Wooden Sword",
+      "ingredients": [
+        {
+          "name": "Wood",
+          "quantity": 10
+        }
+      ],
+      "description": "A simple wooden sword for basic combat."
+    },
+    {
+      "item": "Super Potion",
+      "description": "A potion that restores a moderate amount of health.",
+      "ingredients": [
+        {
+          "name": "Super Herb",
+          "quantity": 2
+        },
+        {
+          "name": "Water Bottle",
+          "quantity": 1
+        }
+      ]
+    }
+  ],
+  "location": [
+    {
+      "name": "Whispering Forest",
+      "palmons": [
+        "Firesaur",
+        "Elecphant"
+      ],
+      "resources": [
+        "Wood",
+        "Herb",
+        "Fiber"
+      ],
+      "description": "A dense forest with a variety of common Palmons and basic resources."
+    },
+    {
+      "name": "Sunny Plains",
+      "palmons": [
+        "Elecphant"
+      ],
+      "resources": [
+        "Fiber",
+        "Stone"
+      ],
+      "description": "An open field where Electric-type Palmons are often found."
+    },
+    {
+      "name": "Crystal Caves",
+      "palmons": [
+        "Aquaturtle"
+      ],
+      "resources": [
+        "Stone",
+        "Crystal"
+      ],
+      "description": "A dark cave system with a network of underground rivers."
+    },
+    {
+      "name": "Volcano's Heart",
+      "description": "A dangerous area full of fire-type Palmons.",
+      "palmons": [
+        "Firesaur",
+        "Lavamander"
+      ],
+      "resources": [
+        "Iron",
+        "Coal"
+      ]
+    }
+  ]
+}

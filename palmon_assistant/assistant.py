@@ -1,7 +1,9 @@
 import json
 import os
+import shutil
 
 GAMES_DIR = "data/games"
+
 
 class Game:
     def __init__(self, name):
@@ -18,7 +20,8 @@ class Game:
                 with open(self.structure_file, 'r') as f:
                     return json.load(f)
             except json.JSONDecodeError:
-                print(f"Error: Could not decode structure for game '{self.name}'.")
+                print(f"Error: Could not decode structure for game "
+                      f"'{self.name}'.")
                 return {"categories": {}}
         return {"categories": {}}
 
@@ -27,24 +30,55 @@ class Game:
             json.dump(self.structure, f, indent=2)
 
     def _load_data(self):
-        for category, config in self.structure.get("categories", {}).items():
-            file_path = os.path.join(self.path, config["file"])
+        # Check storage mode
+        storage_mode = self.structure.get("storage_mode", "multiple_files")
+
+        if storage_mode == "single_file":
+            data_file = self.structure.get("data_file", f"{self.name}.json")
+            file_path = os.path.join(self.path, data_file)
             if os.path.exists(file_path):
                 try:
                     with open(file_path, 'r') as f:
-                        self.data[category] = json.load(f)
+                        self.data = json.load(f)
                 except json.JSONDecodeError:
-                    print(f"Error: Could not decode data for category '{category}' in game '{self.name}'.")
-                    self.data[category] = []
+                    print(f"Error: Could not decode data file '{data_file}'.")
+                    self.data = {}
             else:
-                self.data[category] = []
+                self.data = {}
 
-    def save_data(self, category):
-        if category in self.structure.get("categories", {}):
-            config = self.structure["categories"][category]
-            file_path = os.path.join(self.path, config["file"])
+            # Ensure all categories exist in data
+            for category in self.structure.get("categories", {}):
+                if category not in self.data:
+                    self.data[category] = []
+        else:
+            # Multiple files mode (legacy/default)
+            for category, config in self.structure.get("categories", {}).items():
+                file_path = os.path.join(self.path, config.get("file", f"{category}.json"))
+                if os.path.exists(file_path):
+                    try:
+                        with open(file_path, 'r') as f:
+                            self.data[category] = json.load(f)
+                    except json.JSONDecodeError:
+                        print(f"Error: Could not decode data for category "
+                              f"'{category}'.")
+                        self.data[category] = []
+                else:
+                    self.data[category] = []
+
+    def save_data(self, category=None):
+        storage_mode = self.structure.get("storage_mode", "multiple_files")
+
+        if storage_mode == "single_file":
+            data_file = self.structure.get("data_file", f"{self.name}.json")
+            file_path = os.path.join(self.path, data_file)
             with open(file_path, 'w') as f:
-                json.dump(self.data[category], f, indent=2)
+                json.dump(self.data, f, indent=2)
+        else:
+            if category and category in self.structure.get("categories", {}):
+                config = self.structure["categories"][category]
+                file_path = os.path.join(self.path, config.get("file", f"{category}.json"))
+                with open(file_path, 'w') as f:
+                    json.dump(self.data[category], f, indent=2)
 
     def find_entry(self, category, search_term):
         if category not in self.data:
@@ -70,7 +104,8 @@ class Game:
                                 parts = [f"{k}: {v}" for k, v in item.items()]
                                 print(f"    - {', '.join(parts)}")
                         else:
-                            print(f"  {field.capitalize()}: {', '.join(map(str, val))}")
+                            s = ', '.join(map(str, val))
+                            print(f"  {field.capitalize()}: {s}")
                     else:
                         print(f"  {field.capitalize()}: {val}")
                 found = True
@@ -91,26 +126,26 @@ class Game:
 
         try:
             key_value = input(f"Enter {key_field}: ").strip()
-            if any(e.get(key_field, "").lower() == key_value.lower() for e in entries):
-                print(f"An entry with {key_field} '{key_value}' already exists.")
+            if any(e.get(key_field, "").lower() == key_value.lower()
+                   for e in entries):
+                print(f"An entry with {key_field} '{key_value}' "
+                      "already exists.")
                 return
 
             new_entry = {key_field: key_value}
 
             for field in fields:
                 val = input(f"Enter {field}: ").strip()
-                # Basic type inference
-                if "," in val: # Assume list
-                     val = [v.strip() for v in val.split(",")]
+                if "," in val:  # Assume list
+                    val = [v.strip() for v in val.split(",")]
                 elif val.isdigit():
                     val = int(val)
-                # Note: complex object lists (like ingredients) are hard to input via simple CLI
-                # For now, we accept string input. If user wants list, they use commas.
                 new_entry[field] = val
 
             entries.append(new_entry)
             self.save_data(category)
-            print(f"Successfully added '{key_value}' to category '{category}'.")
+            print(f"Successfully added '{key_value}' to category "
+                  f"'{category}'.")
 
         except (EOFError, KeyboardInterrupt):
             print("\nAdd operation cancelled.")
@@ -122,18 +157,26 @@ class Game:
                 print("Category already exists.")
                 return
 
-            key_field = input("Enter key field name (e.g., name, item): ").strip()
-            fields_str = input("Enter other fields (comma-separated): ").strip()
+            key_field = input("Enter key field name (e.g., name, item): "
+                              ).strip()
+            fields_str = input("Enter other fields (comma-separated): "
+                               ).strip()
             fields = [f.strip() for f in fields_str.split(",")]
 
             self.structure["categories"][name] = {
-                "file": f"{name}.json",
                 "key_field": key_field,
                 "fields": fields
             }
+            # Add file attribute only if in multiple_files mode
+            if self.structure.get("storage_mode") != "single_file":
+                self.structure["categories"][name]["file"] = f"{name}.json"
+
             self._save_structure()
-            self.data[name] = [] # Initialize empty data
-            self.save_data(name) # Create the file
+
+            if name not in self.data:
+                self.data[name] = []
+
+            self.save_data(name)
             print(f"Category '{name}' created.")
 
         except (EOFError, KeyboardInterrupt):
@@ -152,7 +195,8 @@ class GameManager:
     def list_games(self):
         if not os.path.exists(GAMES_DIR):
             return []
-        return [d for d in os.listdir(GAMES_DIR) if os.path.isdir(os.path.join(GAMES_DIR, d))]
+        return [d for d in os.listdir(GAMES_DIR)
+                if os.path.isdir(os.path.join(GAMES_DIR, d))]
 
     def create_game(self, name):
         path = os.path.join(GAMES_DIR, name)
@@ -160,9 +204,17 @@ class GameManager:
             print(f"Game '{name}' already exists.")
             return
         os.makedirs(path)
-        # Create empty structure
+
+        # Default to single_file for new games as per latest requirement?
+        # Or keep structure generic. Let's default to single_file now.
+        structure = {
+            "storage_mode": "single_file",
+            "data_file": f"{name}.json",
+            "categories": {}
+        }
+
         with open(os.path.join(path, "structure.json"), 'w') as f:
-            json.dump({"categories": {}}, f)
+            json.dump(structure, f, indent=2)
         print(f"Game '{name}' created.")
         self.load_game(name)
 
@@ -174,6 +226,37 @@ class GameManager:
         self.current_game = Game(name)
         print(f"Switched to game: {name}")
 
+    def export_data(self, target_path, game_name=None):
+        """Exports game data to a target directory."""
+        if game_name:
+            source_dir = os.path.join(GAMES_DIR, game_name)
+            if not os.path.exists(source_dir):
+                print(f"Game '{game_name}' not found.")
+                return
+            dest_dir = os.path.join(target_path, game_name)
+        else:
+            source_dir = GAMES_DIR
+            dest_dir = target_path
+
+        try:
+            if os.path.exists(dest_dir):
+                print(f"Warning: Destination '{dest_dir}' already exists.")
+                # Auto-overwrite for Android export convenience?
+                # Or keep asking? The user said "save and set aside".
+                # If non-interactive pipe, input() fails.
+                # Let's check if we are in a TTY.
+                if sys.stdin.isatty():
+                    confirm = input("Overwrite? (y/n): ").lower()
+                    if confirm != 'y':
+                        print("Export cancelled.")
+                        return
+                shutil.rmtree(dest_dir)
+
+            shutil.copytree(source_dir, dest_dir)
+            print(f"Successfully exported data to '{dest_dir}'.")
+        except Exception as e:
+            print(f"Export failed: {e}")
+
 
 def main():
     print("Welcome to the Universal Game Assistant!")
@@ -181,7 +264,7 @@ def main():
 
     manager = GameManager()
 
-    # Auto-load Palmon Survival if it exists and is the only one, or just default behavior
+    # Auto-load Palmon Survival if it exists and is the only one
     games = manager.list_games()
     if "Palmon Survival" in games:
         manager.load_game("Palmon Survival")
@@ -228,11 +311,14 @@ def main():
                 print("  games - List all games")
                 print("  create game <name> - Create a new game")
                 print("  use <game> - Switch to a game")
+                print("  export <path> - Export all data to path")
                 print("  exit - Exit")
 
                 if manager.current_game:
                     print(f"\nCommands for {manager.current_game.name}:")
-                    print("  add category - Define a new category of information")
+                    print("  add category - Define a new category of "
+                          "information")
+                    print("  export game <path> - Export this game's data")
                     for cat in manager.current_game.structure["categories"]:
                         print(f"  {cat} <name> - Find entry in {cat}")
                         print(f"  add {cat} - Add new {cat}")
@@ -252,6 +338,42 @@ def main():
                 else:
                     game_name = " ".join(args)
                     manager.load_game(game_name)
+
+            elif command == "export":
+                if not args:
+                    # Check for Android environment
+                    is_android = "ANDROID_ROOT" in os.environ or \
+                                 "ANDROID_DATA" in os.environ
+                    if is_android:
+                        # Common Termux path
+                        default_path = "/sdcard/PalmonAssistantData"
+                        print(f"Android detected. Defaulting export to: "
+                              f"{default_path}")
+
+                        game_mode = False
+                        if len(args) > 1 and args[0] == "game":
+                            game_mode = True
+
+                        if game_mode and manager.current_game:
+                            manager.export_data(default_path,
+                                                manager.current_game.name)
+                        elif game_mode:
+                            print("No game selected to export.")
+                        else:
+                            manager.export_data(default_path)
+                    else:
+                        print("Usage: export <path> OR export game <path>")
+                else:
+                    if args[0] == "game":
+                        if not manager.current_game:
+                            print("No game selected to export.")
+                        elif len(args) < 2:
+                            print("Usage: export game <path>")
+                        else:
+                            manager.export_data(args[1],
+                                                manager.current_game.name)
+                    else:
+                        manager.export_data(args[0])
 
             elif manager.current_game:
                 # Dynamic commands for the current game
@@ -279,6 +401,7 @@ def main():
         except (EOFError, KeyboardInterrupt):
             print("\nGoodbye!")
             break
+
 
 if __name__ == "__main__":
     main()
