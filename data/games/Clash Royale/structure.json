@@ -1,0 +1,13 @@
+{
+  "categories": {
+    "card": {
+      "file": "card.json",
+      "key_field": "name",
+      "fields": [
+        "elixir",
+        "type",
+        "rarity"
+      ]
+    }
+  }
+}

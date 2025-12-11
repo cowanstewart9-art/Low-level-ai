@@ -1,0 +1,18 @@
+{
+  "storage_mode": "single_file",
+  "data_file": "Palmon Survival.json",
+  "categories": {
+    "palmon": {
+      "key_field": "name",
+      "fields": ["type", "abilities", "strengths", "weaknesses", "rarity"]
+    },
+    "recipe": {
+      "key_field": "item",
+      "fields": ["description", "ingredients"]
+    },
+    "location": {
+      "key_field": "name",
+      "fields": ["description", "palmons", "resources"]
+    }
+  }
+}
